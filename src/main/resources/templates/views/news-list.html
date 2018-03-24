@@ -1,0 +1,16 @@
+<div data-th-fragment="news-list">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-th-each="item : ${news}">
+                    <td data-th-text="${item.getId()}"></td>
+                    <td data-th-text="${item.getTitle()}"></td>
+                </tr>
+            </tbody>
+        </table>
+</div>
