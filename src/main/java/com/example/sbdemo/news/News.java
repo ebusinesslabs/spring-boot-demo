@@ -1,4 +1,4 @@
-package com.example.thdemo.news;
+package com.example.sbdemo.news;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

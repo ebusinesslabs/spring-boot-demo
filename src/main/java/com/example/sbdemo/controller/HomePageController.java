@@ -1,6 +1,6 @@
-package com.example.thdemo.controller;
+package com.example.sbdemo.controller;
 
-import com.example.thdemo.MessagePrinter;
+import com.example.sbdemo.MessagePrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +31,6 @@ public class HomePageController {
     public String index(Model model) {
         model.addAttribute("TEMPLATE", TEMPLATE);
         model.addAttribute("hello", this.messagePrinter.sayHello());
-        return "default";
+        return "sbadmin";
     }
 }

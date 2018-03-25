@@ -1,4 +1,4 @@
-package com.example.thdemo;
+package com.example.sbdemo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
