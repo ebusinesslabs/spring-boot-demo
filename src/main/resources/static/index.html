@@ -8,13 +8,30 @@
     <title>Index.html</title>
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li><a href="/news"> News</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
-        <h2>Spring Boot with Thymeleaf</h2>
-        <div class="well">
-            <h4>Welcome page</h4>
+        <div class="jumbotron">
+            <h1>Welcome to <span style="color:#6db33f;">Spring Boot</span></h1>
+            <p>Spring Boot makes it easy to create stand-alone, production-grade Spring-based Applications that you can run.
+                We take an opinionated view of the Spring platform and third-party libraries, so that you can get started with minimum fuss.
+                Most Spring Boot applications need very little Spring configuration.
+                You can use Spring Boot to create Java applications that can be started by using java -jar or more traditional war deployments.
+                We also provide a command line tool that runs “spring scripts”.</p>
         </div>
-        <div class="container">
-            Go to <a href="/home">home</a>
+        <div class="panel">
+                Our primary goals are:
+                <ul>
+                    <li>Provide a radically faster and widely accessible getting-started experience for all Spring development.</li>
+                    <li>Be opinionated out of the box but get out of the way quickly as requirements start to diverge from the defaults.</li>
+                    <li>Provide a range of non-functional features that are common to large classes of projects (such as embedded servers, security, metrics, health checks, and externalized configuration).</li>
+                    <li>Absolutely no code generation and no requirement for XML configuration.</li>
+                </ul>
         </div>
     </div>
 </body>
