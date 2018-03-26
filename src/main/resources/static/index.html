@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <title>Index.html</title>
+    <title>Home</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-inverse">
-            <ul class="nav navbar-nav">
-                <li><a href="/news"> News</a></li>
-            </ul>
+            <div class="container">
+                <img src="images/spring-logo.png" class="pull-left" style="height: 40px;" />
+                <ul class="nav navbar-nav">
+                    <li><a href="/"> Home</a> </li>
+                    <li><a href="/news"> News</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="min-height: 650px;">
         <div class="jumbotron">
             <h1>Welcome to <span style="color:#6db33f;">Spring Boot</span></h1>
+            <p>&nbsp;</p>
             <p>Spring Boot makes it easy to create stand-alone, production-grade Spring-based Applications that you can run.
                 We take an opinionated view of the Spring platform and third-party libraries, so that you can get started with minimum fuss.
                 Most Spring Boot applications need very little Spring configuration.
@@ -25,7 +31,7 @@
                 We also provide a command line tool that runs “spring scripts”.</p>
         </div>
         <div class="panel">
-                Our primary goals are:
+                <h4><i class="fa fa-dot-circle-o fa-fw"></i> Our primary goals are:</h4>
                 <ul>
                     <li>Provide a radically faster and widely accessible getting-started experience for all Spring development.</li>
                     <li>Be opinionated out of the box but get out of the way quickly as requirements start to diverge from the defaults.</li>
@@ -34,5 +40,13 @@
                 </ul>
         </div>
     </div>
+    <footer class="container">
+        <hr />
+        <span class="pull-left">
+            <i class="fa fa-book fa-fw"></i>
+            <a href="https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/htmlsingle/" target="_blank">Docs</a>
+        </span>
+        <span class="pull-right">Development 2018 - <a href="mailto:dimitris.vossos@gmail.com">Dimitris Vossos</a></span>
+    </footer>
 </body>
 </html>
