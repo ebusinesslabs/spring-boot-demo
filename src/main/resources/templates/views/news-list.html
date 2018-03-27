@@ -16,7 +16,7 @@
                         </thead>
                         <tbody>
                         <tr data-th-each="item : ${news}">
-                            <td data-th-text="${item.getId()}"></td>
+                            <td><a href="#" data-th-text="${item.getId()}" data-th-href="@{'/news/' + ${item.id}}" ></a></td>
                             <td data-th-text="${item.getTitle()}"></td>
                         </tr>
                         </tbody>
