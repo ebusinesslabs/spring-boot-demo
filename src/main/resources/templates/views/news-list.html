@@ -27,8 +27,17 @@
     </div>
 </div>
 
-<script data-th-fragment="inlinejs">
-        $(document).ready(function() {
+<script data-th-fragment="inlinejs" data-th-inline="javascript">
+    /*<![CDATA[*/
+
+    $(document).ready(function() {
             $('#datatables-news').DataTable();
+
+            var message = /*[[${message}]]*/ 'default';
+            if (message != null) {
+                toastr.success(message);
+            }
         });
+
+    /*]]>*/
 </script>
