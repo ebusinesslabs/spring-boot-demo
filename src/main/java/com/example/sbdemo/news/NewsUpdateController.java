@@ -12,8 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import static java.lang.System.exit;
 
 @Controller
 public class NewsUpdateController {
@@ -34,9 +34,10 @@ public class NewsUpdateController {
 
     @GetMapping(value = "/news/{id:[\\d]+}")
     public String showSingleNews(Model model, @PathVariable("id") Long id) {
-        News news = this.newsRepository.findOne(id);
+        Optional<News> optionalNews = this.newsRepository.findById(id);
         model.addAttribute("TEMPLATE", TEMPLATE);
-        model.addAttribute("news", news);
+        optionalNews.ifPresent(news -> model.addAttribute("news", optionalNews.get()));
+
         return "sbadmin";
     }
 

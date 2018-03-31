@@ -20,6 +20,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String index(Model model) {
         model.addAttribute("TEMPLATE", TEMPLATE);
+        model.addAttribute("parameter", "this is a parameter");
         return "sbadmin";
     }
 
