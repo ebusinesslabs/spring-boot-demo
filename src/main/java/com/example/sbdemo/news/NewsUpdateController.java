@@ -20,13 +20,6 @@ public class NewsUpdateController {
 
     private NewsRepository newsRepository;
 
-    private static final Map<String,String> TEMPLATE;
-    static {
-        TEMPLATE  = new HashMap<>();
-        TEMPLATE.put("VIEW", "news-update");
-        TEMPLATE.put("TITLE", "News Update Page");
-    }
-
     @Autowired
     public NewsUpdateController(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
@@ -35,10 +28,9 @@ public class NewsUpdateController {
     @GetMapping(value = "/news/{id:[\\d]+}")
     public String showSingleNews(Model model, @PathVariable("id") Long id) {
         Optional<News> optionalNews = this.newsRepository.findById(id);
-        model.addAttribute("TEMPLATE", TEMPLATE);
         optionalNews.ifPresent(news -> model.addAttribute("news", optionalNews.get()));
 
-        return "sbadmin";
+        return "views/news-update";
     }
 
     @PostMapping(value = "/news/{id:[\\d]+}")

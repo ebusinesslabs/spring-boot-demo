@@ -13,13 +13,6 @@ public class NewsListController {
 
     private NewsRepository newsRepository;
 
-    private static final Map<String,String> TEMPLATE;
-    static {
-        TEMPLATE  = new HashMap<>();
-        TEMPLATE.put("VIEW", "news-list");
-        TEMPLATE.put("TITLE", "News List Page");
-    }
-
     @Autowired
     public NewsListController(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
@@ -27,8 +20,7 @@ public class NewsListController {
 
     @GetMapping("/news")
     public String showNews(Model model) {
-        model.addAttribute("TEMPLATE", TEMPLATE);
         model.addAttribute("news", this.newsRepository.findAll());
-        return "sbadmin";
+        return "views/news-list";
     }
 }

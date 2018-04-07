@@ -6,10 +6,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -18,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/news").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().permitAll().logoutSuccessUrl("/");
     }
@@ -26,10 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, BCryptPasswordEncoder passwordEncoder) throws Exception {
 
-        auth.inMemoryAuthentication()
-                .withUser("dvossos")
-                .password(passwordEncoder.encode("testpass"))
-                .roles("admin");
+//        auth.inMemoryAuthentication()
+//                .withUser("dvossos")
+//                .password(passwordEncoder.encode("testpass"))
+//                .roles("admin");
+        auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Bean

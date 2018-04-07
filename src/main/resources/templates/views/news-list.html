@@ -1,11 +1,30 @@
-<div data-th-fragment="news-list">
+<!DOCTYPE html>
+<html>
+
+<head data-th-replace="~{fragment/head :: head}">
+    <title></title>
+</head>
+
+<body>
+
+<div id="wrapper">
+    <nav data-th-replace="~{fragment/navigation :: navigation}"></nav>
+</div>
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" data-th-text="#{pageheader.newslist}">News List</h1>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading" data-th-text="#{total.records(${news.size()})}">
                     Total xx records
                 </div>
-                <!-- /.panel-heading -->
                 <div class="panel-body">
                     <table class="table table-responsive table-striped" id="datatables-news">
                         <thead>
@@ -27,7 +46,12 @@
     </div>
 </div>
 
-<script data-th-fragment="inlinejs" data-th-inline="javascript">
+<footer data-th-replace="~{fragment/footer :: footer}"></footer>
+
+<div data-th-replace="~{fragment/scripts :: scripts}"></div>
+
+
+<script type="text/javascript" rel="script" data-th-inline="javascript">
     /*<![CDATA[*/
 
     $(document).ready(function() {
@@ -41,3 +65,6 @@
 
     /*]]>*/
 </script>
+
+</body>
+</html>
