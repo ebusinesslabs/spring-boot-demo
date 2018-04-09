@@ -1,5 +1,6 @@
 package com.example.sbdemo;
 
+import com.example.sbdemo.user.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,10 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, BCryptPasswordEncoder passwordEncoder) throws Exception {
 
-//        auth.inMemoryAuthentication()
-//                .withUser("dvossos")
-//                .password(passwordEncoder.encode("testpass"))
-//                .roles("admin");
         auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder);
     }
 

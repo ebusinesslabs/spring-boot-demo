@@ -1,6 +1,7 @@
 package com.example.sbdemo.admin;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model, String error) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
         return "views/login";
     }
 }
