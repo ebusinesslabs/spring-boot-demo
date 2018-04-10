@@ -24,6 +24,16 @@
                 <span data-th-text="${parameter}"></span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span data-th-text="${#authentication.getPrincipal().getUsername()}"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
 
         <footer data-th-replace="~{fragment/footer :: footer}"></footer>
 
