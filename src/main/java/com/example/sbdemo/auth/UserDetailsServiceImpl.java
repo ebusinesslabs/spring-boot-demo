@@ -1,5 +1,7 @@
-package com.example.sbdemo.user;
+package com.example.sbdemo.auth;
 
+import com.example.sbdemo.user.User;
+import com.example.sbdemo.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

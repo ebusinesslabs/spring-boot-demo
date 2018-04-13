@@ -50,9 +50,10 @@
                                 <label for="picture" data-th-text="#{news.picture}">Picture</label>
                                 <input type="text" class="form-control" data-th-field="*{picture}" name="picture" id="picture" />
                             </div>
-                            <div class="form-group">
-                                <hr/>
-                                <button class="btn btn-primary pull-right" name="btn_submit" id="btn_submit">Save</button>
+                            <hr/>
+                            <div class="pull-right">
+                            <button class="btn btn-primary " name="btn_submit" id="btn_submit">Save</button>
+                            <button type="button" class="btn btn-default " name="btn_cancel" id="btn_cancel">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -65,6 +66,14 @@
     <footer data-th-replace="~{fragment/footer :: footer}"></footer>
 
     <div data-th-replace="~{fragment/scripts :: scripts}"></div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btn_cancel").on("click", function () {
+                window.history.back();
+            })
+        });
+    </script>
 
 </body>
 </html>

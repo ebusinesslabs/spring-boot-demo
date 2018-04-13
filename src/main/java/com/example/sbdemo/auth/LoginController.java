@@ -1,4 +1,4 @@
-package com.example.sbdemo.admin;
+package com.example.sbdemo.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
