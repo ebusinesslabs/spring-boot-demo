@@ -17,24 +17,33 @@
         <a class="navbar-brand" href="/">Spring Boot Demo</a>
     </div>
     <!-- /.navbar-header -->
-
-    <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+    <div data-th-switch="${#authorization.expression('isAuthenticated()')}" >
+        <div data-th-case="true">
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> <span data-th-text="#{menu.userprofile}">User Profile</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#" onclick="document.getElementById('logout-form').submit();"><i
+                                class="fa fa-sign-out fa-fw"></i> <span data-th-text="#{login.logout}">Logout</span></a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
                 </li>
-                <li class="divider"></li>
-                <li><a href="#" onclick="document.getElementById('logout-form').submit();"><i
-                        class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
+                <!-- /.dropdown -->
             </ul>
-            <!-- /.dropdown-user -->
-        </li>
-        <!-- /.dropdown -->
-    </ul>
+        </div>
+        <div data-th-case="false">
+            <ul class="nav navbar-top-links navbar-right">
+                <li><a href="#" data-th-href="@{/login}">Login</a></li>
+            </ul>
+
+        </div>
+    </div>
     <!-- /.navbar-top-links -->
     <form method="post" action="#" data-th-action="@{/logout}" id="logout-form"></form>
 

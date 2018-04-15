@@ -21,9 +21,9 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String index(Model model) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        logger.warn(authentication.getPrincipal().toString());
+        //SecurityContext context = SecurityContextHolder.getContext();
+        //Authentication authentication = context.getAuthentication();
+        //logger.warn(authentication.getPrincipal().toString());
         model.addAttribute("parameter", "this is a parameter");
         return "views/dashboard";
     }

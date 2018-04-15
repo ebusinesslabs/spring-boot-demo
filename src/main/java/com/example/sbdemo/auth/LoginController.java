@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     @GetMapping("/login")
-    public String showLoginForm(Model model, String error) {
-        if (error != null) {
-            model.addAttribute("error", error);
-        }
+    public String showLoginForm(Model model) {
         return "views/login";
     }
 }
