@@ -2,6 +2,7 @@ package com.example.sbdemo.news;
 
 import com.oracle.tools.packager.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +29,12 @@ public class NewsUpdateController {
     @GetMapping(value = "/news/{id:[\\d]+}")
     public String showSingleNews(Model model, @PathVariable("id") Long id) {
         Optional<News> optionalNews = this.newsRepository.findById(id);
+        if (!optionalNews.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
         optionalNews.ifPresent(news -> model.addAttribute("news", optionalNews.get()));
-
         return "views/news-update";
+
     }
 
     @PostMapping(value = "/news/{id:[\\d]+}")
