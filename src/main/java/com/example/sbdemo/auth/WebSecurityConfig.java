@@ -20,6 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/news").permitAll()
+                .antMatchers("/dashboard").hasAuthority("editor")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
@@ -29,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth, BCryptPasswordEncoder passwordEncoder) throws Exception {
-
         auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder);
     }
 

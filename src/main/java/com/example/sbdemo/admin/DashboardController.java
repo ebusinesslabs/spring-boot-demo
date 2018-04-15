@@ -21,7 +21,6 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String index(Model model) {
-        logger.warn("message");
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         logger.warn(authentication.getPrincipal().toString());
