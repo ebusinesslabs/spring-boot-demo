@@ -14,20 +14,32 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-
 @Controller
-public class NewsUpdateController {
-
+public class NewsController {
     private static final String UPLOAD_DIR = "src/main/resources/static/images/";
+
     private NewsRepository newsRepository;
 
     @Autowired
-    public NewsUpdateController(NewsRepository newsRepository) {
+    public NewsController(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
     }
 
+    @GetMapping(value="/news/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("news", new News());
+        return "views/news-add";
+    }
+
+    @PostMapping(value="/news/add")
+    public String addNews(@ModelAttribute News news, @RequestParam("pic_file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        news.setPicture(this.uploadFile(file));
+        this.newsRepository.save(news);
+        return "redirect:/news";
+    }
+
     @GetMapping(value = "/news/{id:[\\d]+}")
-    public String showSingleNews(Model model, @PathVariable("id") Long id) {
+    public String showUpdateForm(Model model, @PathVariable("id") Long id) {
         Optional<News> optionalNews = this.newsRepository.findById(id);
         if (!optionalNews.isPresent()) {
             throw new ResourceNotFoundException();
@@ -41,20 +53,36 @@ public class NewsUpdateController {
     public String updateNews(@ModelAttribute News news,
                              RedirectAttributes redirectAttributes,
                              @RequestParam("pic_file") MultipartFile file) {
+
+        news.setPicture(this.uploadFile(file));
+        this.newsRepository.save(news);
+        redirectAttributes.addFlashAttribute("message", "Record saved successfully.");
+        return "redirect:/news";
+    }
+
+    @GetMapping("/news")
+    public String showListNews(Model model) {
+        model.addAttribute("news", this.newsRepository.findAll());
+        return "views/news-list";
+    }
+
+    @GetMapping("/news/{id:[\\d]+}/delete")
+    public String deleteNews(@PathVariable("id") Long id) {
+        this.newsRepository.deleteById(id);
+        return "redirect:/news";
+    }
+
+    private String uploadFile(MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
                 Files.write(path, bytes);
-                news.setPicture(file.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
                 return "views/news-update";
             }
         }
-
-        this.newsRepository.save(news);
-        redirectAttributes.addFlashAttribute("message", "Record saved successfully.");
-        return "redirect:/news";
+        return file.getOriginalFilename();
     }
 }

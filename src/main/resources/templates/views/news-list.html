@@ -31,12 +31,31 @@
                         <tr>
                             <th>#</th>
                             <th data-th-text="#{news.title}">Title</th>
+                            <th class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr data-th-each="item : ${news}">
                             <td><a href="#" data-th-text="${item.getId()}" data-th-href="@{'/news/' + ${item.id}}" ></a></td>
                             <td data-th-text="${item.getTitle()}"></td>
+                            <td class="text-center">
+                                <a href="#" class="text-danger" data-toggle="modal" data-th-data-target="|#confirm-deletion-${item.id}|">
+                                    <i class="fa fa-trash"></i></a>
+                            </td>
+                            <!-- modal dialog for deletion -->
+                            <div class="modal fade" data-th-id="|confirm-deletion-${item.id}|" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">Deletion</div>
+                                        <div class="modal-body" data-th-text="|Are you sure you want to delete '${item.title}'?|">Are you sure?</div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-danger" data-th-href="@{'/news/' + ${item.id} + '/delete'}">OK</a>
+                                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /modal dialog for deletion -->
                         </tr>
                         </tbody>
                     </table>
@@ -48,7 +67,6 @@
     <footer data-th-replace="~{fragment/footer :: footer}"></footer>
 
 </div>
-
 
 <div data-th-replace="~{fragment/scripts :: scripts}"></div>
 
