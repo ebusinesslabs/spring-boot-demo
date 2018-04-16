@@ -1,21 +1,18 @@
 package com.example.sbdemo.news;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.File;
 
 @Entity
 public class News {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String slug;
     private String body;
-    private String picture;
+    private String picture = "blank.jpeg";
 
     public Long getId() {
         return id;

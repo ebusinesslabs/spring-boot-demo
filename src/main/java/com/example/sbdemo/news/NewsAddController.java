@@ -1,46 +1,41 @@
 package com.example.sbdemo.news;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-
 
 @Controller
-public class NewsUpdateController {
+public class NewsAddController {
 
     private static final String UPLOAD_DIR = "src/main/resources/static/images/";
+
     private NewsRepository newsRepository;
 
     @Autowired
-    public NewsUpdateController(NewsRepository newsRepository) {
+    public NewsAddController(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
     }
 
-    @GetMapping(value = "/news/{id:[\\d]+}")
-    public String showSingleNews(Model model, @PathVariable("id") Long id) {
-        Optional<News> optionalNews = this.newsRepository.findById(id);
-        if (!optionalNews.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-        optionalNews.ifPresent(news -> model.addAttribute("news", optionalNews.get()));
-        return "views/news-update";
-
+    @GetMapping(value="/news/add")
+    public String showForm(Model model) {
+        model.addAttribute("news", new News());
+        return "views/news-add";
     }
 
-    @PostMapping(value = "/news/{id:[\\d]+}")
-    public String updateNews(@ModelAttribute News news,
-                             RedirectAttributes redirectAttributes,
-                             @RequestParam("pic_file") MultipartFile file) {
+    @PostMapping(value="/news/add")
+    public String addNews(@ModelAttribute News news, @RequestParam("pic_file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
@@ -49,12 +44,10 @@ public class NewsUpdateController {
                 news.setPicture(file.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
-                return "views/news-update";
+                return "views/news-add";
             }
         }
-
         this.newsRepository.save(news);
-        redirectAttributes.addFlashAttribute("message", "Record saved successfully.");
         return "redirect:/news";
     }
 }

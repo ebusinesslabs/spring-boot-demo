@@ -22,11 +22,11 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 data-th-text="'ID: '  + ${news.id}"></h4>
+                        <h4 data-th-text="#{news.addtitle}">Add new record</h4>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form method="post" data-th-action="@{'/news/' + ${news.id}}" data-th-object="${news}" enctype="multipart/form-data">
+                        <form method="post" data-th-action="@{'/news/add'}" data-th-object="${news}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="hidden" data-th-field="*{id}"/>
                             </div>
@@ -42,13 +42,8 @@
                                 <label for="body" data-th-text="#{news.body}">Body:</label>
                                 <textarea class="form-control" data-th-field="*{body}" rows="10" name="body" id="body"></textarea>
                             </div>
-                            <div class="form-group" data-th-if="*{picture != ''}">
-                                <p>&nbsp;</p>
-                                <img src="#" data-th-src="@{'/images/' + *{picture}}" class="img-fluid img-thumbnail" style="width:200px;" />
-                            </div>
                             <div class="form-group">
-                                <label for="picture" data-th-text="#{news.currentpicture}">Current picture</label>
-                                <input type="text" class="form-control" name="picture" id="picture" data-th-field="*{picture}">
+                                <input type="hidden" class="form-control" name="picture" id="picture" data-th-field="*{picture}">
                             </div>
                             <div class="form-group">
                                 <label for="pic_file" data-th-text="#{news.picture}">Picture</label>
