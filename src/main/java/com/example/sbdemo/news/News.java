@@ -1,7 +1,12 @@
 package com.example.sbdemo.news;
 
-import javax.persistence.*;
-import java.io.File;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class News {
@@ -9,9 +14,15 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Size(min=5, max=128)
     private String title;
+
     private String slug;
+
     private String body;
+
     private String picture = "blank.jpeg";
 
     public Long getId() {

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,9 +52,13 @@ public class NewsController {
     }
 
     @PostMapping(value = "/news/{id:[\\d]+}")
-    public String updateNews(@ModelAttribute News news,
+    public String updateNews(@Valid @ModelAttribute News news,
+                             BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              @RequestParam("pic_file") MultipartFile file) {
+        if (bindingResult.hasErrors()) {
+            return "views/news-update";
+        }
 
         news.setPicture(this.uploadFile(file));
         this.newsRepository.save(news);

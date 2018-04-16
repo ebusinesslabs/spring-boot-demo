@@ -33,6 +33,7 @@
                             <div class="form-group">
                                 <label for="title" data-th-text="#{news.title}">Title:</label>
                                 <input type="text" class="form-control" name="title" id="title" data-th-field="*{title}"/>
+                                <p data-th-if="${#fields.hasErrors('title')}" data-th-errors="*{title}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <div class="form-group">
                                 <label for="slug" data-th-text="#{news.slug}">Slug:</label>
@@ -46,7 +47,7 @@
                                 <p>&nbsp;</p>
                                 <img src="#" data-th-src="@{'/images/' + *{picture}}" class="img-fluid img-thumbnail" style="width:200px;" />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" data-th-if="*{picture != ''}">
                                 <label for="picture" data-th-text="#{news.currentpicture}">Current picture</label>
                                 <input type="text" class="form-control" name="picture" id="picture" data-th-field="*{picture}" disabled>
                             </div>
