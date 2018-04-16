@@ -36,7 +36,7 @@
                         </thead>
                         <tbody>
                         <tr data-th-each="item : ${news}">
-                            <td><a href="#" data-th-text="${item.getId()}" data-th-href="@{'/news/' + ${item.id}}" ></a></td>
+                            <td><a href="#" data-th-text="${item.id}" data-th-href="@{'/news/' + ${item.id}}" ></a></td>
                             <td data-th-text="${item.getTitle()}"></td>
                             <td class="text-center">
                                 <a href="#" class="text-danger" data-toggle="modal" data-th-data-target="|#confirm-deletion-${item.id}|">
@@ -46,11 +46,11 @@
                             <div class="modal fade" data-th-id="|confirm-deletion-${item.id}|" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header">Deletion</div>
-                                        <div class="modal-body" data-th-text="|Are you sure you want to delete '${item.title}'?|">Are you sure?</div>
+                                        <div class="modal-header text-danger">[(#{modal.deletion.header})]</div>
+                                        <div class="modal-body" >[(#{modal.deletion.body(${item.title})})]</div>
                                         <div class="modal-footer">
-                                            <a href="#" class="btn btn-danger" data-th-href="@{'/news/' + ${item.id} + '/delete'}">OK</a>
-                                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            <a href="#" class="btn btn-danger" data-th-href="@{'/news/' + ${item.id} + '/delete'}" data-th-text="#{modal.deletion.ok}">OK</a>
+                                            <button class="btn btn-default" data-dismiss="modal" data-th-text="#{modal.deletion.cancel}">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
