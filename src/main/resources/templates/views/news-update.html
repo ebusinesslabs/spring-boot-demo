@@ -26,7 +26,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form method="post" data-th-action="@{'/news/' + ${news.id}}" data-th-object="${news}">
+                        <form method="post" data-th-action="@{'/news/' + ${news.id}}" data-th-object="${news}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="hidden" data-th-field="*{id}"/>
                             </div>
@@ -44,11 +44,15 @@
                             </div>
                             <div class="form-group">
                                 <p>&nbsp;</p>
-                                <img src="#" data-th-src="@{*{picture}}" class="img-fluid img-thumbnail" style="width:200px;" />
+                                <img src="#" data-th-src="@{'/images/' + *{picture}}" class="img-fluid img-thumbnail" style="width:200px;" />
                             </div>
                             <div class="form-group">
-                                <label for="picture" data-th-text="#{news.picture}">Picture</label>
-                                <input type="text" class="form-control" data-th-field="*{picture}" name="picture" id="picture" />
+                                <label for="pic_file" data-th-text="#{news.picture}">Picture</label>
+                                <input type="file" class="form-control" name="pic_file" id="pic_file" />
+                            </div>
+                            <div class="form-group">
+                                <label for="picture">Current picture</label>
+                                <input type="text" class="form-control" name="picture" id="picture" data-th-field="*{picture}">
                             </div>
                             <hr/>
                             <div class="pull-right">
