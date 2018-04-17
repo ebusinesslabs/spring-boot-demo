@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/news").permitAll()
+                .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/news", "/api/**").permitAll()
                 .antMatchers("/dashboard").hasAuthority("editor")
                 .anyRequest().authenticated()
                 .and()
