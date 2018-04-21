@@ -67,10 +67,14 @@
 
     <div data-th-replace="~{fragment/scripts :: scripts}"></div>
 
-    <script type="text/javascript">
+    <script type="text/javascript" data-th-inline="javascript" rel="script">
+
         $(document).ready(function() {
             $("#btn_cancel").on("click", function () {
-                window.history.back();
+                /*<![CDATA[*/
+                var uri =/*[[@{'/news'}]]*/ "/";
+                /*]]>*/
+                window.location.assign(uri);
             })
 
             $("#body").summernote({
@@ -79,6 +83,7 @@
             });
 
         });
+
     </script>
 
 </body>

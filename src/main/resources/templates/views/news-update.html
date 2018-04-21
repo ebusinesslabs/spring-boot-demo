@@ -73,14 +73,16 @@
 
     <div data-th-replace="~{fragment/scripts :: scripts}"></div>
 
-    <script type="text/javascript">
+    <script type="text/javascript" rel="script" data-th-inline="javascript">
         $(document).ready(function() {
             $("#btn_cancel").on("click", function () {
-                window.history.back();
+                /*<![CDATA[*/
+                var uri = /*[[@{'/news'}]]*/ "/";
+                /*]]>*/
+                window.location.assign("/news");
             })
 
             $("#body").summernote({
-                height:200,
                 lang: 'el-GR'
             });
         });
