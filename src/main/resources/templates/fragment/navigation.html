@@ -18,6 +18,18 @@
     </div>
     <!-- /.navbar-header -->
     <div data-th-switch="${#authorization.expression('isAuthenticated()')}" >
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-globe"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="?lang=en"><img src="/images/USA.png" />&nbsp;&nbsp;English</a></li>
+                    <li><a href="?lang=el"><img src="/images/Greece.png" />&nbsp;&nbsp;Greek</a></li>
+                    <li><a href="?lang=fr"><img src="/images/France.png" />&nbsp;&nbsp;French</a></li>
+                </ul>
+            </li>
+        </ul>
         <div data-th-case="true">
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
