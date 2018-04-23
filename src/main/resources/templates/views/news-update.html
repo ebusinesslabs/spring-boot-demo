@@ -38,6 +38,7 @@
                             <div class="form-group">
                                 <label for="slug" data-th-text="#{news.slug}">Slug:</label>
                                 <input class="form-control" name="slug" id="slug" data-th-field="*{slug}"/>
+                                <p data-th-if="${#fields.hasErrors('slug')}" data-th-errors="*{slug}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <div>
                                 <label for="body" data-th-text="#{news.body}">Body:</label>

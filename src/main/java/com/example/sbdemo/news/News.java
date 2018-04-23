@@ -16,14 +16,15 @@ public class News {
     private Long id;
 
     @NotEmpty
-    @Size(min=5, max=128)
+    @Size(min = 5, max = 128)
     private String title;
 
+    @Size(min = 5, max = 256)
     private String slug;
 
     private String body;
 
-    private String picture;
+    private String picture = "blank.jpeg";
 
     public Long getId() {
         return id;
