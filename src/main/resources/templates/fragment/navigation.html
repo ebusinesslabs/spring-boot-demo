@@ -76,6 +76,16 @@
                     <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> <span data-th-text="#{menu.dashboard}"> Dashboard</span></a>
                 </li>
                 <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>
+                        <span data-th-text="#{menu.users}"> Users</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="#" data-th-href="@{/user}" data-th-text="#{menu.users.list}">List</a></li>
+                        <li><a href="#" data-th-text="#{menu.users.add}">Add</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-newspaper-o fa-fw"></i>
                         <span data-th-text="#{menu.news}"> News</span>
                         <span class="fa arrow"></span>

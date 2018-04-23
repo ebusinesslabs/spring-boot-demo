@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head data-th-replace="~{fragment/head :: head}">
+    <title></title>
+</head>
+
+<body>
+
+<div id="wrapper">
+    <nav data-th-replace="~{fragment/navigation :: navigation}"></nav>
+</div>
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" data-th-text="#{pageheader.userslist}">Users List</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" data-th-text="#{total.records(${users.size()})}">
+                    Total xx records
+                </div>
+                <div class="panel-body">
+                    <table class="table table-responsive table-striped" id="datatables-users">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th data-th-text="#{user.fname}">First Name</th>
+                            <th data-th-text="#{user.lname}">Last Name</th>
+                            <th data-th-text="#{user.email}">Email</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-th-each="user : ${users}">
+                            <td><a href="#" data-th-href="@{'/user/' + ${user.id}}" data-th-text="${user.id}">#</a></td>
+                            <td data-th-text="${user.fname}"></td>
+                            <td data-th-text="${user.lname}"></td>
+                            <td data-th-text="${user.email}"></td>
+                            <td class="text-center">
+                                <a href="#" class="text-danger" data-toggle="modal" data-th-data-target="|#confirm-deletion-${user.id}|">
+                                    <i class="fa fa-trash"></i></a>
+                            </td>
+                            <!-- modal dialog for deletion -->
+                            <div class="modal fade" data-th-id="|confirm-deletion-${user.id}|" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-danger">[(#{modal.deletion.header})]</div>
+                                        <div class="modal-body" >[(#{modal.deletion.body(${user.fname}, ${user.lname})})]</div>
+                                        <div class="modal-footer">
+                                            <a href="#" class="btn btn-danger" data-th-text="#{modal.deletion.ok}">OK</a>
+                                            <button class="btn btn-default" data-dismiss="modal" data-th-text="#{modal.deletion.cancel}">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /modal dialog for deletion -->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer data-th-replace="~{fragment/footer :: footer}"></footer>
+
+</div>
+
+<div data-th-replace="~{fragment/scripts :: scripts}"></div>
+
+
+<script type="text/javascript" rel="script" data-th-inline="javascript">
+    /*<![CDATA[*/
+
+    $(document).ready(function() {
+            $('#datatables-users').DataTable();
+
+            var message = /*[[${message}]]*/ 'default';
+            if (message != null) {
+                toastr.success(message);
+            }
+        });
+
+    /*]]>*/
+</script>
+
+</body>
+</html>

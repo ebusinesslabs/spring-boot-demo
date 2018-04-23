@@ -1,17 +1,35 @@
 package com.example.sbdemo.user;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Size(min = 3, max = 30)
     private String fname;
+
+    @NotEmpty
+    @Size(min = 3, max = 30)
     private String lname;
+
+    @NotEmpty
+    @Size(min = 6, max = 60)
+    @Email
     private String email;
+
+    @NotEmpty
+    @Size(min = 6)
     private String password;
+
+
     private String roles;
 
     public Long getId() {
