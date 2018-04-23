@@ -46,7 +46,7 @@ public class NewsController {
         if (!optionalNews.isPresent()) {
             throw new ResourceNotFoundException();
         }
-        optionalNews.ifPresent(news -> model.addAttribute("news", optionalNews.get()));
+        model.addAttribute("news", optionalNews.get());
         return "views/news-update";
 
     }
