@@ -62,7 +62,7 @@ public class NewsController {
 
         news.setPicture(this.uploadFile(file));
         this.newsRepository.save(news);
-        redirectAttributes.addFlashAttribute("message", "Record saved successfully.");
+        redirectAttributes.addFlashAttribute("message", String.format("Record %d saved successfully.", news.getId()));
         return "redirect:/news";
     }
 
