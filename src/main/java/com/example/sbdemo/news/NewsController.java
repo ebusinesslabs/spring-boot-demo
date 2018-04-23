@@ -1,6 +1,9 @@
 package com.example.sbdemo.news;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,11 @@ import java.util.Optional;
 
 @Controller
 public class NewsController {
+
+    private static final int INITIAL_PAGE_SIZE = 10;
+
+    private static final int INITIAL_PAGE = 0;
+
     private static final String UPLOAD_DIR = "src/main/resources/static/images/news/";
 
     private NewsRepository newsRepository;
@@ -69,8 +77,15 @@ public class NewsController {
     }
 
     @GetMapping("/news")
-    public String showListNews(Model model) {
-        model.addAttribute("news", this.newsRepository.findAll());
+    public String showListNews(
+            Model model,
+            @RequestParam("size") Optional<Integer> pageSize,
+            @RequestParam("page") Optional<Integer> pageNumber) {
+
+        Page<News> news = this.newsRepository.findAll(
+                PageRequest.of(pageNumber.orElse(INITIAL_PAGE), pageSize.orElse(INITIAL_PAGE_SIZE)));
+
+        model.addAttribute("news", news);
         return "views/news-list";
     }
 
