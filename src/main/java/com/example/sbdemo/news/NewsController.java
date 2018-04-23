@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Controller
 public class NewsController {
-    private static final String UPLOAD_DIR = "src/main/resources/static/images/";
+    private static final String UPLOAD_DIR = "src/main/resources/static/images/news/";
 
     private NewsRepository newsRepository;
 
@@ -60,7 +60,9 @@ public class NewsController {
             return "views/news-update";
         }
 
-        news.setPicture(this.uploadFile(file));
+        if (!file.isEmpty()) {
+            news.setPicture(this.uploadFile(file));
+        }
         this.newsRepository.save(news);
         redirectAttributes.addFlashAttribute("message", String.format("Record %d saved successfully.", news.getId()));
         return "redirect:/news";
@@ -79,7 +81,6 @@ public class NewsController {
     }
 
     private String uploadFile(MultipartFile file) {
-        if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
@@ -88,7 +89,6 @@ public class NewsController {
                 e.printStackTrace();
                 return "views/news-update";
             }
-        }
         return file.getOriginalFilename();
     }
 }

@@ -4,6 +4,8 @@
 !gradle/wrapper/gradle-wrapper.jar
 src/main/resources/application-dev.properties
 node_modules
+src/main/resources/static/images/news/*
+!src/main/resources/static/images/news/blank.jpeg
 
 ### STS ###
 .apt_generated

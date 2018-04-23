@@ -23,7 +23,7 @@ public class News {
 
     private String body;
 
-    private String picture = "blank.jpeg";
+    private String picture;
 
     public Long getId() {
         return id;
