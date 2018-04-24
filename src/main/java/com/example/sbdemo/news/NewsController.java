@@ -82,10 +82,10 @@ public class NewsController {
             @RequestParam("size") Optional<Integer> pageSize,
             @RequestParam("page") Optional<Integer> pageNumber) {
 
-        Page<News> news = this.newsRepository.findAll(
+        Page<News> items = this.newsRepository.findAll(
                 PageRequest.of(pageNumber.orElse(INITIAL_PAGE), pageSize.orElse(INITIAL_PAGE_SIZE)));
 
-        model.addAttribute("news", news);
+        model.addAttribute("news", items);
         return "views/news-list";
     }
 

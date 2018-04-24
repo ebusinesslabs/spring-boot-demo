@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagination</title>
+</head>
+<body>
+
+<ul class="pagination" data-th-fragment="pagination(items)">
+    <li data-th-each="page : ${#numbers.sequence(0,items.totalPages - 1)}">
+        <a href="" data-th-href="${'?page=' + page}" data-th-text="${page + 1}">1</a>
+    </li>
+</ul>
+
+</body>
+</html>
