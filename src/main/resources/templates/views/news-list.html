@@ -61,9 +61,9 @@
                         <tfoot>
                             <tr class="text-center">
                                 <td colspan="3">
-                                    <ul class="pagination">
-                                        <li data-th-each="page : ${#numbers.sequence(0,news.totalPages - 1)}">
-                                            <a href="" data-th-href="${'?page=' + page}" data-th-text="${page + 1}">1</a>
+                                    <ul class="pagination" data-th-replace="~{fragment/pagination :: pagination(${news})}">
+                                        <li>
+                                            <a href="#">1</a>
                                         </li>
                                     </ul>
                                 </td>

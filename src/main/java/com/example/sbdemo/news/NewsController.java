@@ -22,7 +22,7 @@ import java.util.Optional;
 @Controller
 public class NewsController {
 
-    private static final int INITIAL_PAGE_SIZE = 10;
+    private static final int INITIAL_PAGE_SIZE = 5;
 
     private static final int INITIAL_PAGE = 0;
 
@@ -82,10 +82,10 @@ public class NewsController {
             @RequestParam("size") Optional<Integer> pageSize,
             @RequestParam("page") Optional<Integer> pageNumber) {
 
-        Page<News> items = this.newsRepository.findAll(
+        Page<News> news = this.newsRepository.findAll(
                 PageRequest.of(pageNumber.orElse(INITIAL_PAGE), pageSize.orElse(INITIAL_PAGE_SIZE)));
 
-        model.addAttribute("news", items);
+        model.addAttribute("news", news);
         return "views/news-list";
     }
 

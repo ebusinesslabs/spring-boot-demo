@@ -6,9 +6,17 @@
 </head>
 <body>
 
-<ul class="pagination" data-th-fragment="pagination(items)">
-    <li data-th-each="page : ${#numbers.sequence(0,items.totalPages - 1)}">
-        <a href="" data-th-href="${'?page=' + page}" data-th-text="${page + 1}">1</a>
+<ul class="pagination" data-th-fragment="pagination (items)">
+    <li data-th-class="${items.number == 0 ? 'disabled' : ''}">
+        <a data-th-if="${items.number == 0}" href="javascript:void(0)">&lt;</a>
+        <a data-th-if="${items.number gt 0}" data-th-href="'?page=' + ${items.number - 1}">&lt;</a>
+    </li>
+    <li data-th-each="page : ${#numbers.sequence(0,items.totalPages - 1)}" data-th-class="${ items.number eq page } ? 'active' : '' ">
+        <a href="" data-th-href="'?page=' + ${page}" data-th-text="${page + 1}">1</a>
+    </li>
+    <li data-th-class="${items.number == items.totalPages - 1 ? 'disabled' : ''}">
+        <a data-th-if="${items.number == items.totalPages - 1}" href="javascript:void(0)">&gt;</a>
+        <a data-th-if="${items.number lt items.totalPages - 1}" data-th-href="'?page=' + ${items.number + 1}">&gt;</a>
     </li>
 </ul>
 
