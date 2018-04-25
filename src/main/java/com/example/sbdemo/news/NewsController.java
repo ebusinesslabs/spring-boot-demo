@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,9 +23,7 @@ import java.util.Optional;
 @Controller
 public class NewsController {
 
-    private static final int INITIAL_PAGE_SIZE = 5;
-
-    private static final int INITIAL_PAGE = 0;
+    private static final int SLIDING_SIZE = 5;
 
     private static final String UPLOAD_DIR = "src/main/resources/static/images/news/";
 
@@ -79,12 +78,14 @@ public class NewsController {
     @GetMapping("/news")
     public String showListNews(
             Model model,
-            @RequestParam("size") Optional<Integer> pageSize,
-            @RequestParam("page") Optional<Integer> pageNumber) {
+            @PageableDefault(size = 5) Pageable pageable) {
 
-        Page<News> news = this.newsRepository.findAll(
-                PageRequest.of(pageNumber.orElse(INITIAL_PAGE), pageSize.orElse(INITIAL_PAGE_SIZE)));
+        Page<News> news = this.newsRepository.findAll(pageable);
 
+        int minpage = Math.max(pageable.getPageNumber() - SLIDING_SIZE, 0);
+        int maxpage = Math.min(minpage + 2 * SLIDING_SIZE, news.getTotalPages() - 1);
+        model.addAttribute("minpage", minpage);
+        model.addAttribute("maxpage", maxpage);
         model.addAttribute("news", news);
         return "views/news-list";
     }

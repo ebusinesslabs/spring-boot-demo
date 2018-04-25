@@ -11,7 +11,7 @@
         <a data-th-if="${items.number == 0}" href="javascript:void(0)">&lt;</a>
         <a data-th-if="${items.number gt 0}" data-th-href="'?page=' + ${items.number - 1}">&lt;</a>
     </li>
-    <li data-th-each="page : ${#numbers.sequence(0,items.totalPages - 1)}" data-th-class="${ items.number eq page } ? 'active' : '' ">
+    <li data-th-each="page : ${#numbers.sequence(minpage,maxpage)}" data-th-class="${ items.number eq page } ? 'active' : '' ">
         <a href="" data-th-href="'?page=' + ${page}" data-th-text="${page + 1}">1</a>
     </li>
     <li data-th-class="${items.number == items.totalPages - 1 ? 'disabled' : ''}">
