@@ -47,7 +47,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header text-danger">[(#{modal.deletion.header})]</div>
-                                        <div class="modal-body" >[(#{modal.deletion.body(${item.title})})]</div>
+                                        <div class="modal-body" >[(#{modal.deletion.body(${item.title}, '')})]</div>
                                         <div class="modal-footer">
                                             <a href="#" class="btn btn-danger" data-th-href="@{'/news/' + ${item.id} + '/delete'}" data-th-text="#{modal.deletion.ok}">OK</a>
                                             <button class="btn btn-default" data-dismiss="modal" data-th-text="#{modal.deletion.cancel}">Cancel</button>
