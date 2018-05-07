@@ -26,7 +26,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form method="post" data-th-action="@{'/user/' + ${user.id}}" data-th-object="${user}" enctype="multipart/form-data">
+                        <form method="post" data-th-action="@{'/user'}" data-th-object="${user}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <input type="hidden" data-th-field="*{id}"/>
                             </div>
@@ -44,6 +44,20 @@
                                 <label for="email" data-th-text="#{user.email}">Email:</label>
                                 <input type="text" class="form-control" name="email" id="email" data-th-field="*{email}"/>
                                 <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}" class="text-danger" style="padding-left: 2em;"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-th-text="#{user.password}">Password:</label>
+                                <input type="password" class="form-control" name="password" id="password" data-th-field="*{password}" />
+                                <p data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}" class="text-danger" style="padding-left: 2em;"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-th-text="#{user.confirmpassword}">Password:</label>
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="roles">Roles:</label>
+                                <input type="text" class="form-control" name="roles" id="roles" data-th-field="*{roles}" />
+                                <p data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <hr/>
                             <div class="pull-right">
@@ -67,7 +81,7 @@
         $(document).ready(function() {
             $("#btn_cancel").on("click", function () {
                 /*<![CDATA[*/
-                var uri = /*[[@{'/user'}]]*/ "/";
+                var uri = /*[[@{'/users'}]]*/ "/";
                 /*]]>*/
                 window.location.assign(uri);
             })
