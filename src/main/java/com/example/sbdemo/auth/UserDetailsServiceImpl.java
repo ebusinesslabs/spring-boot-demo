@@ -20,9 +20,7 @@ import java.util.*;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-
-    public enum ROLES {editor, user, contributor}
-
+    
     @Autowired
     UserRepository userRepository;
 
