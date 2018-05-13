@@ -56,8 +56,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="roles">Roles:</label>
-                                <input type="text" class="form-control" name="roles" id="roles" data-th-field="*{roles}" />
-                                <p data-th-if="${#fields.hasErrors('roles')}" data-th-errors="*{roles}" class="text-danger" style="padding-left: 2em;"></p>
+                                <select id="roles" name="roles" class="form-control" multiple="multiple" required="required">
+                                    <option data-th-each="role : ${allroles}"
+                                            data-th-value="${role}"
+                                            data-th-text="${role}"
+                                            data-th-selected="${#strings.contains(user.roles,role)?'selected':'false'}"
+                                            >
+                                    </option>
+                                </select>
                             </div>
                             <hr/>
                             <div class="pull-right">
@@ -89,6 +95,8 @@
             $("#body").summernote({
                 lang: 'el-GR'
             });
+
+            $("#roles").select2({placeholder:"select a role"});
         });
     </script>
 

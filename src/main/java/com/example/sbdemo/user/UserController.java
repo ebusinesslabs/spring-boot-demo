@@ -1,9 +1,15 @@
 package com.example.sbdemo.user;
 
+import com.example.sbdemo.auth.UserDetailsServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +18,14 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
 public class UserController {
+
+    private static final String[] ROLES = {"editor", "contributor", "user"};
+    private static final int SLIDING_SIZE = 5;
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -38,8 +48,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String showListUsers(Model model) {
-        model.addAttribute("users", this.userRepository.findAll());
+    public String showListUsers(Model model, @PageableDefault(size = 5) Pageable pageable) {
+        Page<User> users = this.userRepository.findAll(pageable);
+        int minpage = Math.max(pageable.getPageNumber() - SLIDING_SIZE, 0);
+        int maxpage = Math.min(minpage + 2 * SLIDING_SIZE, users.getTotalPages() - 1);
+
+        model.addAttribute("minpage", minpage);
+        model.addAttribute("maxpage", maxpage);
+        model.addAttribute("users", users);
         return "views/user-list";
     }
 
@@ -50,6 +66,7 @@ public class UserController {
             throw new ResourceNotFoundException();
         }
         model.addAttribute("user", optionalUser.get());
+        model.addAttribute("allroles", ROLES);
         return "views/user-update";
     }
 
@@ -59,11 +76,20 @@ public class UserController {
             return "views/user-update";
         }
 
-        //
         User dbUser  = userRepository.findById(user.getId()).get();
         dbUser.setFname(user.getFname());
         dbUser.setLname(user.getLname());
         dbUser.setEmail(user.getEmail());
+
+        // create json array from string e.g. "user, editor"
+        // convert json array to string e.g ["user", "editor"]
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (String role : user.getRoles().split(",")) {
+            arrayNode.add(role);
+        }
+        dbUser.setRoles(arrayNode.toString());
+
         if (!user.getPassword().isEmpty()) {
             dbUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }

@@ -1,5 +1,7 @@
 package com.example.sbdemo.user;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -9,7 +11,8 @@ import org.springframework.validation.Validator;
 public class UserValidator implements Validator  {
     @Override
     public boolean supports(Class<?> clazz) {
-        return User.class.equals(clazz);
+        return PageImpl.class.equals(clazz) || User.class.equals(clazz);
+        //return User.class.equals(clazz);
     }
 
     @Override
