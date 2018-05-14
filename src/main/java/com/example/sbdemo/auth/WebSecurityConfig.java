@@ -19,9 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/news", "/api/**").permitAll()
-                .antMatchers("/dashboard").hasAuthority("editor")
-                .anyRequest().authenticated()
+                .antMatchers("/", "/node_modules/**", "/css/**", "/js/**", "/images/**", "/api/**").permitAll()
+                .antMatchers("/news/**").hasAuthority("editor")
+                .anyRequest().hasAuthority("administrator")
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()

@@ -24,7 +24,7 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-    private static final String[] ROLES = {"editor", "contributor", "user"};
+    private static final String[] ROLES = {"administrator", "editor", "user"};
     private static final int SLIDING_SIZE = 5;
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
