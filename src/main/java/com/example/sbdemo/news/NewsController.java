@@ -99,15 +99,16 @@ public class NewsController {
 
     private String uploadFile(MultipartFile file) {
             UUID uuid = UUID.randomUUID();
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             try {
                 byte[] bytes = file.getBytes();
-                String filename = file.getOriginalFilename();
-                Path path = Paths.get(UPLOAD_DIR + uuid.toString() + filename.substring(filename.lastIndexOf(".") + 1));
+                Path path = Paths.get(UPLOAD_DIR + uuid.toString() + extension);
                 Files.write(path, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "views/news-update";
             }
-        return uuid.toString();
+        return uuid.toString() + extension;
     }
 }
