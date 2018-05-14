@@ -1,5 +1,6 @@
 package com.example.sbdemo.admin;
 
+import com.example.sbdemo.news.NewsRepository;
 import com.example.sbdemo.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ public class DashboardController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NewsRepository newsRepository;
+
     private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     @GetMapping("/dashboard")
@@ -24,7 +28,8 @@ public class DashboardController {
         //SecurityContext context = SecurityContextHolder.getContext();
         //Authentication authentication = context.getAuthentication();
         //logger.warn(authentication.getPrincipal().toString());
-        model.addAttribute("parameter", "this is a parameter");
+        model.addAttribute("countusers", userRepository.count());
+        model.addAttribute("countnews", newsRepository.count());
         return "views/dashboard";
     }
 

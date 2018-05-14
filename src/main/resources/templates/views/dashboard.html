@@ -20,13 +20,49 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <span data-th-text="${parameter}"></span>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-newspaper-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge" data-th-text="${countnews}">26</div>
+                                <div data-th-text="#{menu.news}">News</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/news">
+                       <div class="panel-footer">
+                           <span class="pull-left" data-th-text="#{menu.news.list}">View List</span>
+                           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                           <div class="clearfix"></div>
+                       </div>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <span data-th-text="${#authentication.getPrincipal().getUsername()}"></span>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge" data-th-text="${countusers}">10</div>
+                                <div data-th-text="#{menu.users}">Users</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/users">
+                        <div class="panel-footer">
+                            <span class="pull-left" data-th-text="#{menu.users.list}">View List</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 

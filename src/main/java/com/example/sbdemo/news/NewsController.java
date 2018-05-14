@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class NewsController {
@@ -97,14 +98,16 @@ public class NewsController {
     }
 
     private String uploadFile(MultipartFile file) {
+            UUID uuid = UUID.randomUUID();
             try {
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
+                String filename = file.getOriginalFilename();
+                Path path = Paths.get(UPLOAD_DIR + uuid.toString() + filename.substring(filename.lastIndexOf(".") + 1));
                 Files.write(path, bytes);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "views/news-update";
             }
-        return file.getOriginalFilename();
+        return uuid.toString();
     }
 }
