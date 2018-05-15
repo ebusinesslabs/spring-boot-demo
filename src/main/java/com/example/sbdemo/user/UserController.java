@@ -1,6 +1,5 @@
 package com.example.sbdemo.user;
 
-import com.example.sbdemo.auth.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller

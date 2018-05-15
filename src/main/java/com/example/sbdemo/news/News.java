@@ -1,10 +1,8 @@
 package com.example.sbdemo.news;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -25,6 +23,9 @@ public class News {
     private String body;
 
     private String picture = "blank.jpeg";
+
+    @Transient
+    private MultipartFile multipartFile;
 
     public Long getId() {
         return id;
@@ -64,5 +65,13 @@ public class News {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public MultipartFile getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
     }
 }

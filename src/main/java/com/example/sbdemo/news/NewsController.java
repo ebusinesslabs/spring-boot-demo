@@ -1,6 +1,8 @@
 package com.example.sbdemo.news;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,11 +32,18 @@ public class NewsController {
 
     private static final String UPLOAD_DIR = "src/main/resources/static/images/news/";
 
+    @Autowired
     private NewsRepository newsRepository;
 
     @Autowired
-    public NewsController(NewsRepository newsRepository) {
-        this.newsRepository = newsRepository;
+    private NewsValidator newsValidator;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        binder.addValidators(newsValidator);
     }
 
     @GetMapping(value="/news/add")
@@ -42,8 +53,14 @@ public class NewsController {
     }
 
     @PostMapping(value="/news/add")
-    public String addNews(@ModelAttribute News news, @RequestParam("pic_file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        news.setPicture(this.uploadFile(file));
+    public String addNews(@ModelAttribute News news,
+                          RedirectAttributes redirectAttributes) {
+        try {
+            news.setPicture(this.uploadFile(news.getMultipartFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.newsRepository.save(news);
         return "redirect:/news";
     }
@@ -52,7 +69,7 @@ public class NewsController {
     public String showUpdateForm(Model model, @PathVariable("id") Long id) {
         Optional<News> optionalNews = this.newsRepository.findById(id);
         if (!optionalNews.isPresent()) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(String.format("record with id %d was not found.", id));
         }
         model.addAttribute("news", optionalNews.get());
         return "views/news-update";
@@ -62,17 +79,18 @@ public class NewsController {
     @PostMapping(value = "/news/{id:[\\d]+}")
     public String updateNews(@Valid @ModelAttribute News news,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes,
-                             @RequestParam("pic_file") MultipartFile file) {
+                             RedirectAttributes redirectAttributes) throws IOException {
         if (bindingResult.hasErrors()) {
             return "views/news-update";
         }
 
-        if (!file.isEmpty()) {
-            news.setPicture(this.uploadFile(file));
+        if (!news.getMultipartFile().isEmpty()) {
+            news.setPicture(uploadFile(news.getMultipartFile()));
         }
+
         this.newsRepository.save(news);
-        redirectAttributes.addFlashAttribute("message", String.format("Record %d saved successfully.", news.getId()));
+        String message = messageSource.getMessage("news.saved.success", new Object[]{news.getId()}, LocaleContextHolder.getLocale());
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/news";
     }
 
@@ -97,18 +115,14 @@ public class NewsController {
         return "redirect:/news";
     }
 
-    private String uploadFile(MultipartFile file) {
-            UUID uuid = UUID.randomUUID();
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            try {
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOAD_DIR + uuid.toString() + extension);
-                Files.write(path, bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "views/news-update";
-            }
+    private String uploadFile(MultipartFile file) throws IOException {
+        UUID uuid = UUID.randomUUID();
+        String originalFilename = file.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(UPLOAD_DIR + uuid.toString() + extension);
+        Files.write(path, bytes);
+
         return uuid.toString() + extension;
     }
 }
