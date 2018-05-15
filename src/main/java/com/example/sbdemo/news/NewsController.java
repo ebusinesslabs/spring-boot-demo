@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.naming.Binding;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -53,12 +54,15 @@ public class NewsController {
     }
 
     @PostMapping(value="/news/add")
-    public String addNews(@ModelAttribute News news,
-                          RedirectAttributes redirectAttributes) {
-        try {
-            news.setPicture(this.uploadFile(news.getMultipartFile()));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String addNews(@Valid @ModelAttribute News news,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "views/news-add";
+        }
+
+        if (!news.getMultipartFile().isEmpty()) {
+            news.setPicture(uploadFile(news.getMultipartFile()));
         }
 
         this.newsRepository.save(news);

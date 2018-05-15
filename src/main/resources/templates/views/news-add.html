@@ -33,10 +33,12 @@
                             <div class="form-group">
                                 <label for="title" data-th-text="#{news.title}">Title:</label>
                                 <input type="text" class="form-control" name="title" id="title" data-th-field="*{title}"/>
+                                <p data-th-if="${#fields.hasErrors('title')}" data-th-errors="*{title}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <div class="form-group">
                                 <label for="slug" data-th-text="#{news.slug}">Slug:</label>
                                 <input class="form-control" name="slug" id="slug" data-th-field="*{slug}"/>
+                                <p data-th-if="${#fields.hasErrors('slug')}" data-th-errors="*{slug}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <div>
                                 <label for="body" data-th-text="#{news.body}">Body:</label>
@@ -46,8 +48,9 @@
                                 <input type="hidden" class="form-control" name="picture" id="picture" data-th-field="*{picture}">
                             </div>
                             <div class="form-group">
-                                <label for="pic_file" data-th-text="#{news.picture}">Picture</label>
-                                <input type="file" class="form-control" name="pic_file" id="pic_file" />
+                                <label for="multipartFile" data-th-text="#{news.picture}">Picture</label>
+                                <input type="file" class="form-control" name="multipartFile" id="multipartFile" />
+                                <p data-th-if="${#fields.hasErrors('multipartFile')}" data-th-errors="*{multipartFile}" class="text-danger" style="padding-left: 2em;"></p>
                             </div>
                             <hr/>
                             <div class="pull-right">
