@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<ul class="pagination" data-th-fragment="pagination (items)">
+<ul class="pagination" data-th-fragment="pagination (items)" data-th-if="${ items.totalPages > 0 }">
     <li data-th-class="${items.number eq 0 ? 'disabled' : ''}">
         <a data-th-if="${items.number eq 0}" href="javascript:void(0)">&lt;&lt;</a>
         <a data-th-if="${items.number gt 0}" href="?page=0">&lt;&lt;</a>
