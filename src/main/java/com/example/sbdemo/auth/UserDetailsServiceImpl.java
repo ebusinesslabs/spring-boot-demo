@@ -21,8 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
     
-    @Autowired
+    final
     UserRepository userRepository;
+
+    @Autowired
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

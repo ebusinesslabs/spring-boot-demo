@@ -27,17 +27,17 @@ public class UserController {
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final UserValidator userValidator;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @InitBinder

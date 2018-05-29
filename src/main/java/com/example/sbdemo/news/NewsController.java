@@ -33,14 +33,18 @@ public class NewsController {
 
     private static final String UPLOAD_DIR = "src/main/resources/static/images/news/";
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+
+    private final NewsValidator newsValidator;
+
+    private final MessageSource messageSource;
 
     @Autowired
-    private NewsValidator newsValidator;
-
-    @Autowired
-    private MessageSource messageSource;
+    public NewsController(NewsRepository newsRepository, NewsValidator newsValidator, MessageSource messageSource) {
+        this.newsRepository = newsRepository;
+        this.newsValidator = newsValidator;
+        this.messageSource = messageSource;
+    }
 
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
