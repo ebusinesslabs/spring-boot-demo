@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+    <head data-th-replace="~{fragment/head :: head}">
+        <title></title>
+    </head>
+
+<body>
+
+<div id="wrapper">
+    <nav data-th-replace="~{fragment/navigation :: navigation}"></nav>
+</div>
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" data-th-text="#{pageheader.useraddition}">User Add</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 data-th-text="#{user.addtitle}">Add new user</h4>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <form method="post" data-th-action="@{'/user/add'}" data-th-object="${user}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="hidden" data-th-field="*{id}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname" data-th-text="#{user.fname}">First Name:</label>
+                            <input type="text" class="form-control" name="fname" id="fname" data-th-field="*{fname}" required="required"/>
+                            <p data-th-if="${#fields.hasErrors('fname')}" data-th-errors="*{fname}" class="text-danger" style="padding-left: 2em;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname" data-th-text="#{user.lname}">Last Name:</label>
+                            <input type="text" class="form-control" name="lname" id="lname" data-th-field="*{lname}" required="required"/>
+                            <p data-th-if="${#fields.hasErrors('lname')}" data-th-errors="*{lname}" class="text-danger" style="padding-left: 2em;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-th-text="#{user.email}">Email:</label>
+                            <input type="text" class="form-control" name="email" id="email" data-th-field="*{email}" required="required"/>
+                            <p data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}" class="text-danger" style="padding-left: 2em;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" data-th-text="#{user.password}">Password:</label>
+                            <input type="password" class="form-control" name="password" id="password" data-th-field="*{password}" required="required"/>
+                            <p data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}" class="text-danger" style="padding-left: 2em;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" data-th-text="#{user.confirmpassword}">Password:</label>
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label for="roles">Roles:</label>
+                            <select id="roles" name="roles" class="form-control" multiple="multiple" required="required">
+                                <option data-th-each="role : ${allroles}"
+                                        data-th-value="${role}"
+                                        data-th-text="${role}"
+                                        data-th-selected="${#strings.contains(user.roles,role)?'selected':'false'}"
+                                >
+                                </option>
+                            </select>
+                        </div>
+                        <hr/>
+                        <div class="pull-right">
+                            <button class="btn btn-primary " name="btn_submit" id="btn_submit">Save</button>
+                            <button type="button" class="btn btn-default " name="btn_cancel" id="btn_cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer data-th-replace="~{fragment/footer :: footer}"></footer>
+
+</div>
+
+
+<div data-th-replace="~{fragment/scripts :: scripts}"></div>
+
+<script type="text/javascript" rel="script" data-th-inline="javascript">
+    $(document).ready(function() {
+        $("#btn_cancel").on("click", function () {
+            /*<![CDATA[*/
+            var uri = /*[[@{'/users'}]]*/ "/";
+            /*]]>*/
+            window.location.assign(uri);
+        })
+
+        $("#body").summernote({
+            lang: 'el-GR'
+        });
+
+        $("#roles").select2({placeholder:"select a role"});
+    });
+</script>
+
+</body>
+</html>

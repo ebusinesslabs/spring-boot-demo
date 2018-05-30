@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -79,14 +80,7 @@ public class UserController {
         dbUser.setLname(user.getLname());
         dbUser.setEmail(user.getEmail());
 
-        // create json array from string e.g. "user, editor"
-        // convert json array to string e.g ["user", "editor"]
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode arrayNode = mapper.createArrayNode();
-        for (String role : user.getRoles().split(",")) {
-            arrayNode.add(role);
-        }
-        dbUser.setRoles(arrayNode.toString());
+        dbUser.setRoles(convertRolesToJsonString(user.getRoles()));
 
         if (!user.getPassword().isEmpty()) {
             dbUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -94,5 +88,37 @@ public class UserController {
         userRepository.save(dbUser);
 
         return "redirect:/users";
+    }
+
+    @GetMapping("/user/add")
+    public String addUserForm(Model model) {
+        User user = new User();
+        // Thymeleaf exception for roles:
+        // Cannot apply contains on null
+        user.setRoles("");
+        model.addAttribute("user", user);
+
+        model.addAttribute("allroles", ROLES);
+        return "views/user-add";
+    }
+
+    @PostMapping("/user/add")
+    public String addUser(@Valid @ModelAttribute User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "views/user-add";
+        }
+        user.setRoles(convertRolesToJsonString(user.getRoles()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        return "redirect:/users";
+    }
+
+    private String convertRolesToJsonString(String roles) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (String role : roles.split(",")) {
+            arrayNode.add(role);
+        }
+        return arrayNode.toString();
     }
 }
