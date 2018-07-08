@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
 
     private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
+
+    @Autowired
+    public DashboardController(UserRepository userRepository, NewsRepository newsRepository) {
+        this.userRepository = userRepository;
+        this.newsRepository = newsRepository;
+    }
 
     @GetMapping("/dashboard")
     public String index(Model model) {
