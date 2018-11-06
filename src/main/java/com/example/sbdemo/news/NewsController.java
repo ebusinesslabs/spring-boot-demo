@@ -70,6 +70,8 @@ public class NewsController {
         }
 
         this.newsRepository.save(news);
+        String message = messageSource.getMessage("news.saved.success", new Object[]{news.getId()}, LocaleContextHolder.getLocale());
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/news";
     }
 
