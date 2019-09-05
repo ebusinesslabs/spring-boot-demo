@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -34,11 +37,19 @@ public class UserController {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final MessageSource messageSource;
+
     @Autowired
-    public UserController(UserRepository userRepository, UserValidator userValidator, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(
+            UserRepository userRepository,
+            UserValidator userValidator,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            MessageSource messageSource
+    ) {
         this.userRepository = userRepository;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.messageSource = messageSource;
     }
 
     @InitBinder
@@ -70,7 +81,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/user")
-    public String updateUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+    public String updateUser(
+            @Valid @ModelAttribute User user,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
         if (bindingResult.hasErrors()) {
             return "views/user-update";
         }
@@ -86,7 +101,8 @@ public class UserController {
             dbUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         userRepository.save(dbUser);
-
+        String message = messageSource.getMessage("user.saved.success", new Object[] {user.getId()}, LocaleContextHolder.getLocale());
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/users";
     }
 
