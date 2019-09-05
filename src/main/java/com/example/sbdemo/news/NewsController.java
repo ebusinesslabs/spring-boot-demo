@@ -51,13 +51,13 @@ public class NewsController {
         binder.addValidators(newsValidator);
     }
 
-    @GetMapping(value="/news/add")
+    @GetMapping(value = "/news/add")
     public String showAddForm(Model model) {
         model.addAttribute("news", new News());
         return "views/news-add";
     }
 
-    @PostMapping(value="/news/add")
+    @PostMapping(value = "/news/add")
     public String addNews(@Valid @ModelAttribute News news,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) throws IOException {
@@ -78,7 +78,7 @@ public class NewsController {
     @GetMapping(value = "/news/{id:[\\d]+}")
     public String showUpdateForm(Model model, @PathVariable("id") Long id) {
         Optional<News> optionalNews = this.newsRepository.findById(id);
-        if (!optionalNews.isPresent()) {
+        if (optionalNews.isEmpty()) {
             throw new ResourceNotFoundException(String.format("record with id %d was not found.", id));
         }
         model.addAttribute("news", optionalNews.get());
@@ -107,7 +107,7 @@ public class NewsController {
     @GetMapping("/news")
     public String showListNews(
             Model model,
-            @PageableDefault(size = 5) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
 
         Page<News> news = this.newsRepository.findAll(pageable);
 

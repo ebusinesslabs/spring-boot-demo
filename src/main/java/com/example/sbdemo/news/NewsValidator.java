@@ -5,6 +5,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @Component
 public class NewsValidator implements Validator {
 
@@ -26,7 +28,7 @@ public class NewsValidator implements Validator {
         }
 
         String contentType = multipartFile.getContentType();
-        if (!contentType.equals("image/jpeg") && !contentType.equals("image/png")) {
+        if (!Objects.requireNonNull(contentType).equals("image/jpeg") && !contentType.equals("image/png")) {
             errors.rejectValue("multipartFile", "news.validator.image");
         }
     }

@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String showListUsers(Model model, @PageableDefault(size = 5) Pageable pageable) {
+    public String showListUsers(Model model, @PageableDefault(size = 10) Pageable pageable) {
         Page<User> users = this.userRepository.findAll(pageable);
         int minpage = Math.max(pageable.getPageNumber() - SLIDING_SIZE, 0);
         int maxpage = Math.min(minpage + 2 * SLIDING_SIZE, users.getTotalPages() - 1);
@@ -61,7 +61,7 @@ public class UserController {
     @GetMapping("/user/{id:[\\d]+}")
     public String showUpdatePage(Model model, @PathVariable("id") Long id) {
         Optional<User> optionalUser = this.userRepository.findById(id);
-        if (!optionalUser.isPresent()) {
+        if (optionalUser.isEmpty()) {
             throw new ResourceNotFoundException();
         }
         model.addAttribute("user", optionalUser.get());

@@ -20,9 +20,8 @@ import java.util.*;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-    
-    final
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
     public UserDetailsServiceImpl(UserRepository userRepository) {
