@@ -3,7 +3,7 @@
     "bootstrap": "^3.3.7",
     "datatables": "^1.10.13",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "metismenu": "^2.7.4",
     "select2": "^4.0.6-rc.1",
     "summernote": "^0.8.10",
